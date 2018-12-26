@@ -12,15 +12,16 @@ from util import sgd
 from word2vec import *
 
 if __name__ == '__main__':
-    paser = argparse.ArgumentParser(description='Generating word vector with word2vec')
+    paser = argparse.ArgumentParser(description='Generating word vector with wordvector')
     paser.add_argument('-d', '--data_path', help="Path of corpus", default="datasets/nlpcc2016")
-    paser.add_argument('-t', '--target_path', help="Path to save wordVector", default="datasets/word2vector.txt")
+    paser.add_argument('-t', '--target_path', help="Path to save wordVector", default="datasets/wordvectors.txt")
     args = paser.parse_args()
     config = Config(args)
     data_path = args.data_path
     target_path = args.target_path
     dataset = Helper(path=data_path, tablesize=config.tablesize)
     tokens = dataset.get_tokens()
+    idx2token = dataset.idx2token
     nWords = len(tokens)
     print("Total {} tokens".format(nWords))
 
@@ -62,4 +63,16 @@ if __name__ == '__main__':
         axis=1)
     print("WordVectors shape: {} x {}".format(wordVectors.shape[0], wordVectors.shape[1]))
 
-
+    with open(target_path, 'w') as f:
+        idx = 0
+        for v in wordVectors:
+            word = idx2token[idx]
+            f.write(word.encode('utf8'))
+            vector = ' '
+            for term in v:
+                vector += str(term)
+                vector += ' '
+            f.write(vector)
+            f.write('\n')
+            idx += 1
+    print("Write vectors to file Done!")

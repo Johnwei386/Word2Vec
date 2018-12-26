@@ -10,7 +10,7 @@ class Config:
     SAVE_PARAMS_EVERY = 5000
     expcost = None
     step = 0.3 # learn rate
-    iterations = 100# iterations number
+    iterations = 30 # iterations number
     PRINT_EVERY = 10
     batchsize = 50
     tablesize = 10000 # negative samples table size
