@@ -3,8 +3,13 @@
 
 import os
 import random
+import logging
 import numpy as np
 import cPickle as pickle
+
+logger = logging.getLogger('word2vector')
+logger.setLevel(logging.DEBUG)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 class Helper:
     def __init__(self, path=None, tablesize=100000):
@@ -37,6 +42,7 @@ class Helper:
                     sentence = []
                 else:
                     sentence.append(line[0].decode('utf-8'))
+        #logger.info("Load %d sentence", len(self.sentences))
         self.sentlengths = np.array([len(s) for s in self.sentences])
         self.cumsentlen = np.cumsum(self.sentlengths) # cumulative sum along axis
         return self.sentences
@@ -58,6 +64,7 @@ class Helper:
         self.idx2token += [UNK]
         self.token2freq[UNK] = 1
         self.wordcount += 1
+        #logging.info("Load %d tokens", len(self.token2idx))
 
         return self.token2idx
 
@@ -72,6 +79,7 @@ class Helper:
             freq = 1.0 * self.token2freq[w]
             rejectProb[i] = max(0, 1 - np.sqrt(threshold / freq))
         self.rejectProb = rejectProb
+        #logger.info("Generate reject rate for every token")
         return self.rejectProb
 
     def get_allSentences(self):
@@ -87,9 +95,11 @@ class Helper:
         allsentences = [s for s in allsentences if len(s) > 1]
         # size equal 30 times size of sentences, but erevry sentence in allsentences just contain some random sampled word
         self.allsentences = allsentences 
+        logger.info("Duplicate sentence set to generate a big set")
         return self.allsentences
 
     def get_sampleTable(self):
+        #logger.info("Generate sample table...")
         if self.sampleTable is not None:
             return self.sampleTable
         nTokens = len(self.get_tokens())
@@ -113,12 +123,14 @@ class Helper:
             while i > samplingFreq[j]:
                 j += 1
             self.sampleTable[i] = j
+        #logger.info("Generate sample table done.")
         return self.sampleTable
 
     def sampleTokenIdx(self):
         return self.get_sampleTable()[np.random.randint(0, self.tablesize - 1)]
 
     def getRandomContext(self, C=5):
+        # logger.info("Achieve a random context")
         allsent = self.get_allSentences() # Expand the base range of the sample
         sentID = random.randint(0, len(allsent) - 1) # one random number
         sent = allsent[sentID]
