@@ -5,11 +5,16 @@ from __future__ import division
 import argparse
 import random
 import time
+import logging
 import numpy as np
 from config import Config
 from helper import Helper
 from util import sgd
 from word2vec import *
+
+logger = logging.getLogger('word2vector')
+logger.setLevel(logging.DEBUG)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 if __name__ == '__main__':
     paser = argparse.ArgumentParser(description='Generating word vector with wordvector')
@@ -23,7 +28,7 @@ if __name__ == '__main__':
     tokens = dataset.get_tokens()
     idx2token = dataset.idx2token
     nWords = len(tokens)
-    print("Total {} tokens".format(nWords))
+    logger.info("Total have %d tokens", nWords)
 
     '''for k,v in sorted(tokens.items(), key=lambda x:x[1]):
         print(k,v)
@@ -33,12 +38,15 @@ if __name__ == '__main__':
     np.random.seed(config.np_random_seed)
     startTime = time.time()
     # initialize word vectors
+    logger.info("Initialize word vectors...")
     dimVectors = config.vectors_dim
     wordVectors = np.concatenate(
         ((np.random.rand(nWords, dimVectors) - 0.5) / dimVectors, # centure word vectors
         np.zeros((nWords, dimVectors))), # context word vectors
         axis=0)
+    logger.info("Initialize word vectors done.")
     # use sgd train word vectors
+    logger.info("Train word vectors...")
     wordVectors = sgd(
         lambda vec: word2vec_sgd_wrapper(word2vecModel = skipgram, 
                                          tokens = tokens, 
@@ -57,7 +65,7 @@ if __name__ == '__main__':
         SAVE_PARAMS_EVERY = config.SAVE_PARAMS_EVERY,
         expcost = config.expcost)
 
-    print "training took %d seconds" % (time.time() - startTime)
+    logger.info("Training took %d seconds", (time.time() - startTime))
     wordVectors = np.concatenate(
         (wordVectors[:nWords,:], wordVectors[nWords:,:]),
         axis=1)
