@@ -11,7 +11,7 @@ class Config:
     expcost = None
     step = 0.3 # learn rate
     iterations = 100000 # iterations number
-    PRINT_EVERY = 100
+    PRINT_EVERY = 10
     batchsize = 50
     tablesize = 10000 # negative samples table size
     is_save = False # save action
