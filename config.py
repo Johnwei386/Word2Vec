@@ -14,7 +14,7 @@ class Config:
     PRINT_EVERY = 10
     batchsize = 50
     tablesize = 10000 # negative samples table size
-    is_save = False # save action
+    is_save = True # save action
 
     def __init__(self, args):
         pass
