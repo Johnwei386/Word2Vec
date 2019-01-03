@@ -13,7 +13,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 class Helper:
     def __init__(self, path=None, tablesize=100000):
-        if path is None or os.path.exists(path):
+        if path is None or not os.path.exists(path):
             path = "datasets/nlpcc2016"
         
         self.path = path

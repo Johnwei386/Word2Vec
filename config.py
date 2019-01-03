@@ -6,11 +6,11 @@ class Config:
     np_random_seed = 3145
     context_size = 6
     vectors_dim = 50 # word vectors dimention
-    ANNEAL_EVERY = 20000 # Anneal learning rate every several iterations
-    SAVE_PARAMS_EVERY = 5000
+    ANNEAL_EVERY = 2000 # Anneal learning rate every several iterations
+    SAVE_PARAMS_EVERY = 10000
     expcost = None
     step = 0.3 # learn rate
-    iterations = 100000 # iterations number
+    iterations = 10000 # iterations number
     PRINT_EVERY = 10
     batchsize = 50
     tablesize = 10000 # negative samples table size
