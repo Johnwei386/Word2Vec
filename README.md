@@ -1,7 +1,7 @@
 Word2vec model supported Chinese
 ====
 
-This is a implement for word2vec to generate the embeddings for Chinese. It is based on the work of CS224n, a class for  Natural Language Processing with Deep Learning. 
+This is a implement for word2vec to generate the embeddings by character for Chinese. It is based on the work of CS224n, a class for  Natural Language Processing with Deep Learning. 
 
 Requirement:
 ======
