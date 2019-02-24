@@ -32,5 +32,7 @@ CoNLL format (prefer BMES tag scheme, compatible with the Chinese word segmentat
 
 How to run the code?
 ====
-1. python main.py -d (datasets path) -t (where to save generate the wordvectors)
+```
+python main.py -d (datasets path) -t (where to save generate the wordvectors)
+```
 
