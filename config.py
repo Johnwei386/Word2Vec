@@ -7,7 +7,7 @@ class Config:
     context_size = 6
     vectors_dim = 50 # word vectors dimention
     ANNEAL_EVERY = 2000 # Anneal learning rate every several iterations
-    SAVE_PARAMS_EVERY = 10000
+    SAVE_PARAMS_EVERY = 2000
     expcost = None
     step = 0.3 # learn rate
     iterations = 10000 # iterations number

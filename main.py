@@ -18,7 +18,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 if __name__ == '__main__':
     paser = argparse.ArgumentParser(description='Generating word vector with wordvector')
-    paser.add_argument('-d', '--data_path', help="Path of corpus", default="datasets/nlpcc2016")
+    paser.add_argument('-d', '--data_path', help="Path of corpus", default="datasets/train")
     paser.add_argument('-t', '--target_path', help="Path to save wordVector", default="datasets/wordvectors.txt")
     args = paser.parse_args()
     config = Config(args)
